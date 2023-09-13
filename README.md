@@ -153,7 +153,7 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
     !.vscode/launch.json 
     !.vscode/extensions.json 
     .history
-```
+    ```
 8. Membuat aplikasi dengan nama main dengan command
     `python manage.py startapp main`
 9. menambahkan aplikasi main ke proyek inventoria
