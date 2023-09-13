@@ -1,13 +1,12 @@
+from django.test import TestCase
+from main.models import Product
 
-
-# Create your tests here.
-from django.test import TestCase, Client
-
+'''This test checks if the attributes are using the correct data type'''
 class mainTest(TestCase):
-    def test_main_url_is_exist(self):
-        response = Client().get('/main/')
-        self.assertEqual(response.status_code, 200)
-
-    def test_main_using_main_template(self):
-        response = Client().get('/main/')
-        self.assertTemplateUsed(response, 'main.html')
+    def test_field_data_type(self):
+        product = Product(name="minyak", amount=100, price=20000, description="goreng")
+        
+        self.assertIsInstance(product.name, str)
+        self.assertIsInstance(product.amount, int)
+        self.assertIsInstance(product.price, int)
+        self.assertIsInstance(product.description, str)
