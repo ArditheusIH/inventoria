@@ -3,7 +3,7 @@ link app: https://inventori.adaptable.app/main/
 Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 1. Membuat repository di github dan lokal bernama inventoria.
 2. Menghubungkan repositori lokal dengan repositori di GitHub dengan command:
-    `git branch -M main`
+    `git branch -M main` dan
     `git remote add origin https://github.com/ArditheusIH/inventoria.git`
 3. Membuat virtual environment pada directory inventoria dengan command:
     `python -m venv env`
@@ -192,8 +192,8 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
 
         return render(request, "main.html", context)
     ```
-14.  membuat urls.py di dalam main
-    ```
+14. membuat urls.py di dalam main
+    ``` 
     from django.urls import path
     from main.views import show_main
 
@@ -218,7 +218,8 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
             self.assertIsInstance(product.name, str)
             self.assertIsInstance(product.amount, int)
             self.assertIsInstance(product.price, int)
-            self.assertIsInstance(product.description, str)```
+            self.assertIsInstance(product.description, str)
+    ```
 17. melakukan add commit push ke github
 18. mendeploy ke adaptable.io
 
