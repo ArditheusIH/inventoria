@@ -227,39 +227,36 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
 Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html
 ![bagan](PICS/bagan.png)
 
-    ```
-    `urls.py` berfungsi untuk mengatur rute yang diinginkan (dalam kasus ini app main) sehingga web yang dibuka adalah main. `models.py` berfungsi untuk mengatur struktur database dan mengakses data. `views.py` berisi logic aplikasinya. Setelah menerima permintaan dari router(`urls.py`), `views.py` akan memproses permintaan tersebut, mengambil atau memanipulasi data dari `models.py`, dan kemudian merender template HTML. `main.html` untuk merancang tampilan yang  diisi dengan data dari `models.py` melalui `views.py`
-    ```
+`urls.py` berfungsi untuk mengatur rute yang diinginkan (dalam kasus ini app main) sehingga web yang dibuka adalah main. `models.py` berfungsi untuk mengatur struktur database dan mengakses data. `views.py` berisi logic aplikasinya. Setelah menerima permintaan dari router(`urls.py`), `views.py` akan memproses permintaan tersebut, mengambil atau memanipulasi data dari `models.py`, dan kemudian merender template HTML. `main.html` untuk merancang tampilan yang  diisi dengan data dari `models.py` melalui `views.py`
+
 Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
 
-    ```
-    Ada beberapa alasan kita menggunakan virtual environment. Proyek kita menjadi lebih teratur dan bersih. Virtual environment memungkinkan kita untuk membuat lingkungan tertutup yang terpisah untuk setiap proyek yang berbeda. Kita juga bisa menginstall dependency yang berbeda-beda untuk setiap proyek.
-    Kita bisa saja tidak menggunakan virtual environment, tetapi ini tidak bagus untuk mengerjakan lebih dari satu proyek karena hal ini membuat proyek-proyek berbagi sumber daya dan lingkungan yang sama padahal mungkin kebutuhannya berbeda-beda. 
-    ```
+Ada beberapa alasan kita menggunakan virtual environment. Proyek kita menjadi lebih teratur dan bersih. Virtual environment memungkinkan kita untuk membuat lingkungan tertutup yang terpisah untuk setiap proyek yang berbeda. Kita juga bisa menginstall dependency yang berbeda-beda untuk setiap proyek.
+Kita bisa saja tidak menggunakan virtual environment, tetapi ini tidak bagus untuk mengerjakan lebih dari satu proyek karena hal ini membuat proyek-proyek berbagi sumber daya dan lingkungan yang sama padahal mungkin kebutuhannya berbeda-beda. 
+
 Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
 
-    ```
-    MVC(Model-View-Controller) adalah suatu framework pola arsitektur yang membuat aplikasi terbagi ke dalam 3 komponen utama, yaitu model, view, serta controller. Controller berfungsi untuk menghubungkan dan mengontrol model serta view supaya bisa saling terkoneksi. Controller Bertanggung jawab untuk mengelola input pengguna, mengubah model sesuai dengan input tersebut, dan mengatur tampilan yang harus diperbarui.
-    MVT(Model-View-Template) adalah sebuah konsep arsitektur yang diterapkan dalam pengembangan web dengan tujuan memisahkan elemen-elemen utama dari sebuah aplikasi. Konsep ini memungkinkan pengembang web untuk mengorganisasi dan mengelola kode dengan lebih terstruktur.
-    MVVM(Model-View-ViewModel) mirip dengan MVC dan MVT. ViewModel berfungsi untuk mengelola tampilan dan logika tampilan. Ini berperan sebagai perantara antara model dan view, tetapi dengan lebih banyak kontrol terhadap tampilan. ViewModel biasanya mengikat data antara model dan view.
-    ```
+MVC(Model-View-Controller) adalah suatu framework pola arsitektur yang membuat aplikasi terbagi ke dalam 3 komponen utama, yaitu model, view, serta controller. Controller berfungsi untuk menghubungkan dan mengontrol model serta view supaya bisa saling terkoneksi. Controller Bertanggung jawab untuk mengelola input pengguna, mengubah model sesuai dengan input tersebut, dan mengatur tampilan yang harus diperbarui.
+MVT(Model-View-Template) adalah sebuah konsep arsitektur yang diterapkan dalam pengembangan web dengan tujuan memisahkan elemen-elemen utama dari sebuah aplikasi. Konsep ini memungkinkan pengembang web untuk mengorganisasi dan mengelola kode dengan lebih terstruktur.
+MVVM(Model-View-ViewModel) mirip dengan MVC dan MVT. ViewModel berfungsi untuk mengelola tampilan dan logika tampilan. Ini berperan sebagai perantara antara model dan view, tetapi dengan lebih banyak kontrol terhadap tampilan. ViewModel biasanya mengikat data antara model dan view.
+
 """JAWABAN TUGAS 3"""
 
 Apa perbedaan antara form POST dan form GET dalam Django?
-    ```
-    Biasanya kita menggunakan POST untuk mengirim data ke server dan GET untuk mengambil data dari server. Keduanya bisa untuk mengirim data ke server, tetapi method GET akan menampilkan data yang dikirim pada address bar browser. Oleh karena itu, tidak aman menggunakan GET untuk mengirim data penting seperti user dan password. Sehingga lebih baik menggunakan POST untuk mengirimkan data pada server.
-    ```
- Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
-    ```
-    XML dan JSON keduanya bisa dipakai untuk mengirimkan data. XML biasanya memiliki lebih banyak karakter, sehingga bisa lebih besar dalam ukuran dibandingkan dengan JSON. Hal ini dapat mempengaruhi kinerja dan kecepatan transfer data. XML dirancang untuk merepresentasikan dan menyimpan data terstruktur.
-    JSON lebih ringan, memiliki sintaks yang lebih ringkas dan simple, dan memerlukan lebih sedikit karakter dibandingkan dengan XML. Hal ini berakibat JSON lebih efisien.
-    Sedangkan HTML digunakan untuk membuat tampilan halaman web dan menyusun bagaimana data akan ditampilkan sesuai keinginan kita.
-    ```
- Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
-    ```
-    Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. Selain itu, JSON juga memiliki ukuran file yang lebih kecil dan kecepatan transfer datanya juga lebih cepat.
-    ```
+
+Biasanya kita menggunakan POST untuk mengirim data ke server dan GET untuk mengambil data dari server. Keduanya bisa untuk mengirim data ke server, tetapi method GET akan menampilkan data yang dikirim pada address bar browser. Oleh karena itu, tidak aman menggunakan GET untuk mengirim data penting seperti user dan password. Sehingga lebih baik menggunakan POST untuk mengirimkan data pada server.
+
+Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
     
+XML dan JSON keduanya bisa dipakai untuk mengirimkan data. XML biasanya memiliki lebih banyak karakter, sehingga bisa lebih besar dalam ukuran dibandingkan dengan JSON. Hal ini dapat mempengaruhi kinerja dan kecepatan transfer data. XML dirancang untuk merepresentasikan dan menyimpan data terstruktur.
+JSON lebih ringan, memiliki sintaks yang lebih ringkas dan simple, dan memerlukan lebih sedikit karakter dibandingkan dengan XML. Hal ini berakibat JSON lebih efisien.
+Sedangkan HTML digunakan untuk membuat tampilan halaman web dan menyusun bagaimana data akan ditampilkan sesuai keinginan kita.
+    
+Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+
+Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. Selain itu, JSON juga memiliki ukuran file yang lebih kecil dan kecepatan transfer datanya juga lebih cepat.
+
+
  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
  1. Membuat kerangka views dengan membuat berkas base.html pada root/templates
