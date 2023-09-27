@@ -435,3 +435,265 @@ postman json
 
 postman json id
 ![jsonid](PICS/ssjsonid.png)
+
+"""JAWABAN TUGAS 4"""
+
+1 Apa itu Django UserCreationForm, dan jelaskan apa kelebihan dan kekurangannya?
+
+UserCreationForm adalah suatu class yang disediakan oleh Django authentication framework untuk mempermudah membuat form registrasi pengguna. Kelebihannya adalah sangat cepat dan mudah untuk membuat form registrasi user. Bisa juga di modifikasi untuk membuat form registrasi yang lebih kompleks. Kelemahannya adalah UserCreationForm hanya menyediakan field yang dasar saja yaitu username dan password sehingga butuh dicustom lagi untuk membuat field lain yang dibutuhkan.
+
+2 Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+
+Autentikasi adalah proses memverifikasi identitas pengguna biasanya menggunakan username dan password. Otorisasi adalah proses menentukan tindakan atau resource apa yang user bisa akses pada suatu sistem. Autentikasi penting karena untuk mencegah orang untuk bisa menyamar sebagai orang lain. Otorisasi penting untuk mencegah orang lain melihat, memodifikasi, atau menghapus data pribadi kita.
+
+3 Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna?
+
+cookies adalah data kecil yang dikirim oleh web server kepada browser pengguna dan disimpan pada device pengguna. 
+
+4 Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+
+Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Contohnya tipe data yang disimpan dalam cookies tidak boleh berupa data sensitive seperti password
+
+5 Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Membuat fungsi register pada `views.py` yang ada di main
+    ```
+    def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+    ```
+
+2. Membuat template baru bernama `register.html` pada main/templates
+    ```
+    {% extends 'base.html' %}
+
+    {% block meta %}
+        <title>Register</title>
+    {% endblock meta %}
+
+    {% block content %}  
+
+    <div class = "login">
+        
+        <h1>Register</h1>  
+
+            <form method="POST" >  
+                {% csrf_token %}  
+                <table>  
+                    {{ form.as_table }}  
+                    <tr>  
+                        <td></td>
+                        <td><input type="submit" name="submit" value="Daftar"/></td>  
+                    </tr>  
+                </table>  
+            </form>
+
+        {% if messages %}  
+            <ul>   
+                {% for message in messages %}  
+                    <li>{{ message }}</li>  
+                    {% endfor %}  
+            </ul>   
+        {% endif %}
+
+    </div>  
+
+    {% endblock content %}
+    ```
+
+3. Tambahkan path register pada `urls.py`.
+    ```path('register/', register, name='register'),```
+
+4. membuat fungsi login
+    ```
+    def login_user(request):
+        if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            response = HttpResponseRedirect(reverse("main:show_main")) 
+            response.set_cookie('last_login', str(datetime.datetime.now()))
+            return response
+        else:
+            messages.info(request, 'Sorry, incorrect username or password. Please try again.')
+    context = {}
+    return render(request, 'login.html', context)
+    ```
+
+5. membuat template baru bernama `login.html` 
+    ```
+    {% extends 'base.html' %}
+
+    {% block meta %}
+        <title>Login</title>
+    {% endblock meta %}
+
+    {% block content %}
+
+    <div class = "login">
+
+        <h1>Login</h1>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+                </tr>
+                        
+                <tr>
+                    <td>Password: </td>
+                    <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><input class="btn login_btn" type="submit" value="Login"></td>
+                </tr>
+            </table>
+        </form>
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}     
+            
+        Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
+
+    </div>
+
+    {% endblock content %}
+    ```
+
+6. menambahkan path ke `urls.py`
+    ```path('login/', login_user, name='login'),```
+
+7. Membuat fungsi logout
+    ```
+    def logout_user(request):
+        logout(request)
+        response = HttpResponseRedirect(reverse('main:login'))
+        response.delete_cookie('last_login')
+        return response
+    ```
+
+8. membuat tombol logout pada `main.html`
+    ```
+    <a href="{% url 'main:logout' %}">
+        <button>
+            Logout
+        </button>
+    </a>
+    ```
+
+9. Menambahkan  kode `@login_required(login_url='/login')` di atas fungsi show_main agar halaman main hanya dapat diakses oleh pengguna yang sudah login.
+
+10. menambahkan potongan kode `'last_login': request.COOKIES['last_login']` ke dalam variabel context pada fungsi `show_main`.
+    ```
+    context = {
+        'name': 'Pak Bepe',
+        'class': 'PBP A',
+        'products': products,
+        'last_login': request.COOKIES['last_login'],
+    }
+    ```
+
+11. menambahkan `<h5>Sesi terakhir login: {{ last_login }}</h5>` untuk menampilkan data last login.
+
+12. Membuat 2 user dan 3 dummy product
+
+12. Menambahkan kode `user = models.ForeignKey(User, on_delete=models.CASCADE)` pada model Product pada `models.py`
+
+13. Mengubah `create_product` menjadi 
+    ```
+    def create_product(request):
+        form = ProductForm(request.POST or None)
+
+        if form.is_valid() and request.method == "POST":
+            product = form.save(commit=False)
+            product.user = request.user
+            product.save()
+            return HttpResponseRedirect(reverse('main:show_main'))
+
+        context = {'form': form}
+        return render(request, "create_product.html", context)
+    ```
+
+14. mengubah fungsi `show_main`
+    ```
+    def show_main(request):
+    products = Product.objects.filter(user=request.user)
+
+    context = {
+        'name': request.user.username,
+        ...
+    ...
+    ```
+
+15. Melakukan migration
+
+16. membuat fungsi `increase_amount` untuk menambahkan amount sebanyak 1
+    ```
+    def increase_amount(request, id):
+        updated_product = Product.objects.get(pk=id)
+        updated_product.amount += 1
+        updated_product.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    ```
+
+17. membuat fungsi `decrease_amount` untuk mengurangi amount sebanyak 1
+    ```
+    def decrease_amount(request, id):
+        if updated_product.amount >0:
+            updated_product.amount -= 1
+            updated_product.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    ```
+
+18. membuat fungsi `remove_product` untuk menghapus product
+    ```
+    def remove_product(request,id):
+        updated_product = Product.objects.get(pk=id)
+        updated_product.delete()
+        return HttpResponseRedirect(reverse('main:show_main'))
+    ```
+
+19. membuat 3 tombol pada `main.html`
+    ```
+    ...
+    <tr>
+        <td>{{product.name}}</td>
+        <td>{{product.amount}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.date_added}}</td>
+        <td><a href="{% url 'main:increase_amount' product.id %}"><button>+1</button></a></td>
+        <td><a href="{% url 'main:decrease_amount' product.id %}"><button>-1</button></a></td>
+        <td><a href="{% url 'main:remove_product' product.id %}"><button>remove</button></a></td>
+    </tr>
+    ...
+    ```
+
+20. menambahkan path pada  `urls.py`
+    ```
+    path('register/', register, name='register'), 
+    path('login/', login_user, name='login'),
+    path('logout/', logout_user, name='logout'),
+    path('increase-amount/<int:id>', increase_amount, name='increase_amount'),
+    path('decrease-amount/<int:id>', decrease_amount, name='decrease_amount'),
+    path('remove-product/<int:id>', remove_product, name='remove_product'),
+    ```
