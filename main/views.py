@@ -93,7 +93,7 @@ def increase_amount(request, id):
 
 def decrease_amount(request, id):
     updated_product = Product.objects.get(pk=id)
-    if updated_product.amount >0:
+    if updated_product.amount >1:
         updated_product.amount -= 1
         updated_product.save()
     return HttpResponseRedirect(reverse('main:show_main'))
@@ -102,3 +102,18 @@ def remove_product(request,id):
     updated_product = Product.objects.get(pk=id)
     updated_product.delete()
     return HttpResponseRedirect(reverse('main:show_main'))
+
+def edit_product(request, id):
+    # Get product berdasarkan ID
+    product = Product.objects.get(pk = id)
+
+    # Set product sebagai instance dari form
+    form = ProductForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)

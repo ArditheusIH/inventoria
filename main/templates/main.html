@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Inventory</h1>
 
-    <table>
+{% include 'navbar.html'%}
+
+    <table class="table table table-hover">
         <tr>
             <th>Name</th>
             <th>Amount</th>
@@ -13,7 +14,7 @@
         </tr>
     
         {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
-    
+        
         {% for product in products %}
             <tr>
                 <td>{{product.name}}</td>
@@ -21,9 +22,15 @@
                 <td>{{product.price}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.date_added}}</td>
-                <td><a href="{% url 'main:increase_amount' product.id %}"><button>+1</button></a></td>
-                <td><a href="{% url 'main:decrease_amount' product.id %}"><button>-1</button></a></td>
-                <td><a href="{% url 'main:remove_product' product.id %}"><button>remove</button></a></td>
+                <td><a href="{% url 'main:increase_amount' product.id %}"><button class = "btn btn-light">+1</button></a>
+                <a href="{% url 'main:decrease_amount' product.id %}"><button class = "btn btn-light">-1</button></a></td>
+                <td><a href="{% url 'main:edit_product' product.pk %}">
+                        <button class = "btn btn-secondary">
+                            Edit
+                        </button></a>
+                <a href="{% url 'main:remove_product' product.id %}"><button type="button" class="btn btn-danger">
+                    remove
+                </button></a></td>
             </tr>
         {% endfor %}
     </table>
@@ -33,7 +40,7 @@
     <h5>Sesi terakhir login: {{ last_login }}</h5>
 
     <a href="{% url 'main:create_product' %}">   
-        <button>
+        <button class = "btn btn-primary">
             Add New Product
         </button>
     </a>
@@ -41,7 +48,7 @@
 
 
     <a href="{% url 'main:logout' %}">
-        <button>
+        <button class = "btn btn-danger">
             Logout
         </button>
     </a>

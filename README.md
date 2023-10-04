@@ -697,3 +697,104 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     path('decrease-amount/<int:id>', decrease_amount, name='decrease_amount'),
     path('remove-product/<int:id>', remove_product, name='remove_product'),
     ```
+
+"""TUGAS 5"""
+Jelaskan HTML5 Tag yang kamu ketahui.
+
+tag `<header>` adalah tag untuk membuat header pada dokumen atau bagian web.
+tag `<font>` untuk memodifikasi warna, ukuran, dan style dari sebuah text.
+tag `<figure>` adalah tag untuk menampung konten seperti ilustrasi, diagram, foto, atau kode
+tag `<details>` digunakan untuk informasi yang hidden tetapi bisa ditampilakan jika user menginginkannya.
+
+Jelaskan perbedaan antara margin dan padding.
+
+padding adalah area transparan di sekitar setiap objek/elemen/konten sedangkan margin adalah area transparan paling luar dari sebuah box model.
+
+Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+
+1. Menambahkan Bootstrap CSS dan JS pada base.html
+    ```
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    ```
+
+2. membuat navbar.html di dalam root/templates
+    ```
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'main:show_main' %}">Inventory</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'main:show_main' %}">Home</a>
+            </li>
+            </ul>
+            <span class="navbar-text">
+            Username: {{name}} | 
+            Class: {{class}}
+            </span>
+        </div>
+        </div>
+    </nav>
+    ```
+
+3. Menambahkan `{% include 'navbar.html'%}` pada semua template di main/templates.
+
+4. Menambahkan fitur edit_product
+    ```
+    def edit_product(request, id):
+        # Get product berdasarkan ID
+        product = Product.objects.get(pk = id)
+
+        # Set product sebagai instance dari form
+        form = ProductForm(request.POST or None, instance=product)
+
+        if form.is_valid() and request.method == "POST":
+            # Simpan form dan kembali ke halaman awal
+            form.save()
+            return HttpResponseRedirect(reverse('main:show_main'))
+
+        context = {'form': form}
+        return render(request, "edit_product.html", context)
+    ```
+
+5. Memodifikasi tabel inventori pada main.html
+    ```
+    <table class="table table table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>
+    
+        {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+        
+        {% for product in products %}
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.amount}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.date_added}}</td>
+                <td><a href="{% url 'main:increase_amount' product.id %}"><button class = "btn btn-light">+1</button></a>
+                <a href="{% url 'main:decrease_amount' product.id %}"><button class = "btn btn-light">-1</button></a></td>
+                <td><a href="{% url 'main:edit_product' product.pk %}">
+                        <button class = "btn btn-secondary">
+                            Edit
+                        </button></a>
+                <a href="{% url 'main:remove_product' product.id %}"><button type="button" class="btn btn-danger">
+                    remove
+                </button></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    ```
+
+6. Memberi warna button button yang ada dengan menambahkan kode `class = "btn btn-primary"`, `class = "btn btn-secondary"`, atau ``class = "btn btn-danger"``.
