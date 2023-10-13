@@ -1,6 +1,8 @@
 link app: https://inventori.adaptable.app/main/
 akun adaptable diban
 
+# Tugas 2
+
 Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 1. Membuat repository di github dan lokal bernama inventoria.
 2. Menghubungkan repositori lokal dengan repositori di GitHub dengan command:
@@ -240,7 +242,7 @@ MVC(Model-View-Controller) adalah suatu framework pola arsitektur yang membuat a
 MVT(Model-View-Template) adalah sebuah konsep arsitektur yang diterapkan dalam pengembangan web dengan tujuan memisahkan elemen-elemen utama dari sebuah aplikasi. Konsep ini memungkinkan pengembang web untuk mengorganisasi dan mengelola kode dengan lebih terstruktur.
 MVVM(Model-View-ViewModel) mirip dengan MVC dan MVT. ViewModel berfungsi untuk mengelola tampilan dan logika tampilan. Ini berperan sebagai perantara antara model dan view, tetapi dengan lebih banyak kontrol terhadap tampilan. ViewModel biasanya mengikat data antara model dan view.
 
-"""JAWABAN TUGAS 3"""
+# Tugas 3
 
 Apa perbedaan antara form POST dan form GET dalam Django?
 
@@ -260,7 +262,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
  1. Membuat kerangka views dengan membuat berkas base.html pada root/templates
-    ```
+    ```html
     {% load static %}
     <!DOCTYPE html>
     <html lang="en">
@@ -283,7 +285,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
 
 2. menambahkan `BASE_DIR / 'templates'` pada DIRS didalam `settings.py` sehingga `base.html` terdeteksi.
 3. Mengedit `main.html` sehingga main menggunakan template `base.html` sebagai template utama, menampilkan tabel dan tombol add product.
-    ```
+    ```html
     {% extends 'base.html' %}
 
     {% block content %}
@@ -322,7 +324,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
     {% endblock content %}
     ```
 4. membuat `forms.py` pada main dengan isi
-    ```
+    ```py
     from django.forms import ModelForm
     from main.models import Product
 
@@ -332,7 +334,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
             fields = ["name", "amount", "price", "description"]
     ```
 5. Menambahkan import-import pada `views.py` pada main 
-    ```
+    ```py
     from django.http import HttpResponseRedirect
     from main.forms import ProductForm
     from django.urls import reverse
@@ -341,7 +343,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
     from django.core import serializers
     ```
 6. membuat fungsi `create_product` pada `views.py`
-    ```
+    ```py
     def create_product(request):
     form = ProductForm(request.POST or None)
 
@@ -353,7 +355,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
     return render(request, "create_product.html", context)
     ```
 7. mengubah fungsi `show_main` menjadi
-    ```
+    ```py
     def show_main(request):
     products = Product.objects.all()
     context = {
@@ -365,7 +367,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
     return render(request, "main.html", context)
     ```
 8. membuat berkas `create_product.html` pada `main/templates`
-    ```
+    ```html
     {% extends 'base.html' %} 
 
     {% block content %}
@@ -387,7 +389,7 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
     {% endblock %}
     ```
 9. menambahkan fungsi-fungsi untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID, pada `views.py`
-    ```
+    ```py
     def show_xml(request):
     data = Product.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
@@ -406,11 +408,11 @@ Karena JSON mensupport data type numbers, objects, strings, dan Boolean arrays. 
     ```
 
 10. mengimpor fungsi fungsi tersebut pada `urls.py` yang ada di dir main.
-    ```
+    ```py
     from main.views import show_main, create_product, show_xml, show_json, show_xml_by_id, show_json_by_id 
     ```
 11. menambahkan path-path fungsi tersebut pada `urls.py` yang ada di dir main.
-    ```
+    ```py
     urlpatterns = [
     path('', show_main, name='show_main'),
     path('create-product', create_product, name='create_product'),
@@ -436,7 +438,7 @@ postman json
 postman json id
 ![jsonid](PICS/ssjsonid.png)
 
-"""JAWABAN TUGAS 4"""
+# Tugas 4
 
 1 Apa itu Django UserCreationForm, dan jelaskan apa kelebihan dan kekurangannya?
 
@@ -457,7 +459,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
 5 Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
 1. Membuat fungsi register pada `views.py` yang ada di main
-    ```
+    ```py
     def register(request):
     form = UserCreationForm()
 
@@ -472,7 +474,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```
 
 2. Membuat template baru bernama `register.html` pada main/templates
-    ```
+    ```html
     {% extends 'base.html' %}
 
     {% block meta %}
@@ -513,7 +515,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```path('register/', register, name='register'),```
 
 4. membuat fungsi login
-    ```
+    ```py
     def login_user(request):
         if request.method == 'POST':
         username = request.POST.get('username')
@@ -531,7 +533,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```
 
 5. membuat template baru bernama `login.html` 
-    ```
+    ```html
     {% extends 'base.html' %}
 
     {% block meta %}
@@ -583,7 +585,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```path('login/', login_user, name='login'),```
 
 7. Membuat fungsi logout
-    ```
+    ```python
     def logout_user(request):
         logout(request)
         response = HttpResponseRedirect(reverse('main:login'))
@@ -603,7 +605,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
 9. Menambahkan  kode `@login_required(login_url='/login')` di atas fungsi show_main agar halaman main hanya dapat diakses oleh pengguna yang sudah login.
 
 10. menambahkan potongan kode `'last_login': request.COOKIES['last_login']` ke dalam variabel context pada fungsi `show_main`.
-    ```
+    ```python
     context = {
         'name': 'Pak Bepe',
         'class': 'PBP A',
@@ -619,7 +621,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
 12. Menambahkan kode `user = models.ForeignKey(User, on_delete=models.CASCADE)` pada model Product pada `models.py`
 
 13. Mengubah `create_product` menjadi 
-    ```
+    ```python
     def create_product(request):
         form = ProductForm(request.POST or None)
 
@@ -634,7 +636,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```
 
 14. mengubah fungsi `show_main`
-    ```
+    ```python
     def show_main(request):
     products = Product.objects.filter(user=request.user)
 
@@ -647,7 +649,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
 15. Melakukan migration
 
 16. membuat fungsi `increase_amount` untuk menambahkan amount sebanyak 1
-    ```
+    ```python
     def increase_amount(request, id):
         updated_product = Product.objects.get(pk=id)
         updated_product.amount += 1
@@ -656,7 +658,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```
 
 17. membuat fungsi `decrease_amount` untuk mengurangi amount sebanyak 1
-    ```
+    ```python
     def decrease_amount(request, id):
         if updated_product.amount >0:
             updated_product.amount -= 1
@@ -665,7 +667,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```
 
 18. membuat fungsi `remove_product` untuk menghapus product
-    ```
+    ```python
     def remove_product(request,id):
         updated_product = Product.objects.get(pk=id)
         updated_product.delete()
@@ -689,7 +691,7 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     ```
 
 20. menambahkan path pada  `urls.py`
-    ```
+    ```python
     path('register/', register, name='register'), 
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
@@ -698,22 +700,22 @@ Biasanya aman, tetapi ada beberapa risiko potensial yang harus diwaspadai. Conto
     path('remove-product/<int:id>', remove_product, name='remove_product'),
     ```
 
-"""TUGAS 5"""
-Jelaskan HTML5 Tag yang kamu ketahui.
+# Tugas 5
+### Jelaskan HTML5 Tag yang kamu ketahui.
 
 tag `<header>` adalah tag untuk membuat header pada dokumen atau bagian web.
 tag `<font>` untuk memodifikasi warna, ukuran, dan style dari sebuah text.
 tag `<figure>` adalah tag untuk menampung konten seperti ilustrasi, diagram, foto, atau kode
 tag `<details>` digunakan untuk informasi yang hidden tetapi bisa ditampilakan jika user menginginkannya.
 
-Jelaskan perbedaan antara margin dan padding.
+### Jelaskan perbedaan antara margin dan padding.
 
 padding adalah area transparan di sekitar setiap objek/elemen/konten sedangkan margin adalah area transparan paling luar dari sebuah box model.
 
-Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
 1. Menambahkan Bootstrap CSS dan JS pada base.html
-    ```
+    ```html
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
@@ -721,7 +723,7 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
     ```
 
 2. membuat navbar.html di dalam root/templates
-    ```
+    ```html
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'main:show_main' %}">Inventory</a>
@@ -746,7 +748,7 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
 3. Menambahkan `{% include 'navbar.html'%}` pada semua template di main/templates.
 
 4. Menambahkan fitur edit_product
-    ```
+    ```py
     def edit_product(request, id):
         # Get product berdasarkan ID
         product = Product.objects.get(pk = id)
@@ -764,7 +766,7 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
     ```
 
 5. Memodifikasi tabel inventori pada main.html
-    ```
+    ```html
     <table class="table table table-hover">
         <tr>
             <th>Name</th>
@@ -798,3 +800,175 @@ Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-b
     ```
 
 6. Memberi warna button button yang ada dengan menambahkan kode `class = "btn btn-primary"`, `class = "btn btn-secondary"`, atau ``class = "btn btn-danger"``.
+
+# Tugas 6
+
+### Jelaskan perbedaan antara asynchronous programming dengan synchronous programming.
+
+Dalam synchronous programming, program berjalan secara sequencial, artinya suatu tugas harus menunggu tugas sebelumnya untuk selesai terlebih dahulu sebelum dapat dijalankan. Dalam asynchronous programming, program berjalan secara paralel, artinya program dapat melanjutkan eksekusi tanpa harus menunggu tugas sebelumnya selesai.
+
+### Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma event-driven programming. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
+
+event-driven programming adalah pendekatan pemrograman yang eksekusi programnya berfokus pada event yang terjadi, eperti tindakan pengguna (seperti klik tombol, input keyboard, atau gerakan mouse). contoh penerapannya adalah me-refresh tabel inventory pada saat meng-klik tombol "Add product"
+
+### Jelaskan penerapan asynchronous programming pada AJAX.
+
+Penerapan asynchronous programming pada AJAX memungkinkan untuk mengunduh data dari server di latar belakang, pembaruan halaman secara dinamis tanpa membuat pengguna menunggu, dan menghindari pola "click-wait-refresh"
+
+### Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada library jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+
+Fetch API merupakan bagian dari JavaScript yang terdapat dalam hampir semua device modern. Fetch API menggunakan Promises, yang membuatnya lebih mudah untuk mengelola permintaan asinkron dan menangani respons. jQuery adalah pustaka JavaScript yang menyederhanakan banyak tugas umum dalam pengembangan web, termasuk penggunaan AJAX (Asynchronous JavaScript and XML). Ini mengurangi banyak kode boilerplate dan membuat pengembangan lebih cepat. Yang mana yang lebih baik tergantung pada penggunaannya. Jika ingin mengembangkan aplikasi web modern dengan device terbaru tanpa third-party library, Fetch API mungkin pilihan yang lebih baik.
+
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Membuat fungsi `get_product_json` pada `views.py`
+```py
+def get_product_json(request):
+    product_item = Product.objects.all()
+    return HttpResponse(serializers.serialize('json', product_item))
+```
+
+2. Membuat fungsi `add_product_ajax` pada `views.py`
+```py
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        price = request.POST.get("price")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Product(name=name, price=price, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+```
+
+3. Menambahkan path url ke `urls.py` pada `main`
+```py
+path('create-ajax/', get_product_json, name='get_product_json'),
+path('create-product-ajax/', add_product_ajax, name='add_product_ajax')
+```
+
+4. Mengubah `main.html` menjadi
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container m-3">
+    <div class="card border-0 shadow" style="width: fit-content;">
+        <div class="card-body">
+    <table class="table table table-hover" id="product_table">
+
+    </table>
+    </div>
+    <a href="{% url 'main:create_product' %}">   
+        <button class = "btn btn-primary mb-4 mx-4">
+            Add New Product
+        </button>
+    </a>
+    <button type="button" class="btn btn-primary mb-4 mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
+    </div>
+
+    <br />
+
+    <p>Sesi terakhir login: {{ last_login }}</p>
+
+    <a href="{% url 'main:logout' %}">
+        <button class = "btn btn-danger">
+            Logout
+        </button>
+    </a>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="amount" name="amount"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="col-form-label">Price:</label>
+                        <input type="number" class="form-control" id="price" name="price"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    async function getProducts() {
+        return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+    }
+
+    async function refreshProducts() {
+        document.getElementById("product_table").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = `<tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>`
+        products.forEach((item) => {
+            htmlString += `\n<tr>
+            <td>${item.fields.name}</td>
+            <td>${item.fields.amount}</td>
+            <td>${item.fields.price}</td>
+            <td>${item.fields.description}</td>
+            <td>${item.fields.date_added}</td>
+        </tr>` 
+        })
+        
+        document.getElementById("product_table").innerHTML = htmlString
+    }
+
+    refreshProducts()
+
+    function addProduct() {
+        fetch("{% url 'main:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts)
+
+        document.getElementById("form").reset()
+        return false
+    }
+
+    document.getElementById("button_add").onclick = addProduct
+</script>
+{% endblock content %}
+```
+
+5. Menjalankan `python manage.py collectstatic`
+
+6. Melakukan konfigurasi untuk deployment
+
+7. melakukan add-commit-push ke github

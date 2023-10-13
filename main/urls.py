@@ -20,4 +20,6 @@ urlpatterns = [
     path('decrease-amount/<int:id>', decrease_amount, name='decrease_amount'),
     path('remove-product/<int:id>', remove_product, name='remove_product'),
     path('edit-product/<int:id>', edit_product, name='edit_product'),
+    path('create-ajax/', get_product_json, name='get_product_json'),
+    path('create-product-ajax/', add_product_ajax, name='add_product_ajax')
 ]
