@@ -16,10 +16,11 @@ urlpatterns = [
     path('register/', register, name='register'), 
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
-    path('increase-amount/<int:id>', increase_amount, name='increase_amount'),
-    path('decrease-amount/<int:id>', decrease_amount, name='decrease_amount'),
-    path('remove-product/<int:id>', remove_product, name='remove_product'),
-    path('edit-product/<int:id>', edit_product, name='edit_product'),
+    path('increase-amount/<int:id>/', increase_amount, name='increase_amount'),
+    path('decrease-amount/<int:id>/', decrease_amount, name='decrease_amount'),
+    path('remove-product/<int:id>/', remove_product, name='remove_product'),
+    path('edit-product/<int:id>/', edit_product, name='edit_product'),
     path('create-ajax/', get_product_json, name='get_product_json'),
-    path('create-product-ajax/', add_product_ajax, name='add_product_ajax')
+    path('create-product-ajax/', add_product_ajax, name='add_product_ajax'),
+    path('create-flutter/', create_product_flutter, name='create_product_flutter'),
 ]

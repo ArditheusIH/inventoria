@@ -1,5 +1,6 @@
 link app: https://inventori.adaptable.app/main/
 akun adaptable diban
+link app: https://arditheus-immanuel-tugas.pbp.cs.ui.ac.id/
 
 # Tugas 2
 

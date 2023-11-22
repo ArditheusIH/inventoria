@@ -10,7 +10,7 @@
     </table>
     </div>
     <a href="{% url 'main:create_product' %}">   
-        <button class = "btn btn-primary mb-4 mx-4">
+        <button type = 'button'class = "btn btn-primary mb-4 mx-4" >
             Add New Product
         </button>
     </a>
@@ -82,14 +82,16 @@
             <th>Date Added</th>
         </tr>`
         products.forEach((item) => {
+        
             htmlString += `\n<tr>
             <td>${item.fields.name}</td>
             <td>${item.fields.amount}</td>
             <td>${item.fields.price}</td>
             <td>${item.fields.description}</td>
             <td>${item.fields.date_added}</td>
+            
         </tr>` 
-        })
+    })
         
         document.getElementById("product_table").innerHTML = htmlString
     }
