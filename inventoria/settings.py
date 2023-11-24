@@ -34,7 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ['https://https://arditheus-immanuel-tugas.pbp.cs.ui.ac.id']
+CSRF_TRUSTED_ORIGINS = ['https://arditheus-immanuel-tugas.pbp.cs.ui.ac.id']
 
 
 
